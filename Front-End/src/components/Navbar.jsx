@@ -1,11 +1,14 @@
-import React from 'react'
-import shiraz_logo from "../assets/Website Logo/logo.png"
+import React, { useState } from 'react'
+import shiraz_logo from "../assets/Website-Logo/logo.png"
 import { NavLink,Link } from 'react-router-dom'
 import {assets} from "../assets/assets.js"
 function Navbar() {
+  const [visible,setVisible]=useState(false)
   return (
-    <div className='flex item-center justify-between py-5 font-medium'>
-      <img className='w-20' src={shiraz_logo} alt="" />
+    <nav className='flex item-center justify-between py-5 font-medium'>
+      <Link to={'/'}>
+      <img  className='w-20 cursor-pointer' src={shiraz_logo} alt="" />
+      </Link>
       <ul className='hidden sm:flex gap-5 text-sm items-center text-gray-700'>
         <NavLink to='/'className='flex flex-col item-center gap-1'>
             <p>HOME</p> 
@@ -36,15 +39,28 @@ function Navbar() {
                 </div>
             </div>
         </div>
-
         <Link to={'/cart'} className='relative'>
          <img src={assets.cart_icon} className='w-5' alt="Cart Icon" />
              <p className='absolute top-[-10px] right-[-10px] bg-red-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center'>
              0   
              </p>
             </Link>
+            <img onClick={()=>{setVisible(true)}} src={assets.menu_icon} alt="" className='w-5 sm:hidden cursor-pointer ' />
       </div>
-    </div>
+      <div className={`absolute top-0 right-0 bottom-0 bg-white transition-all overflow-hidden ${visible ? 'w-full' : 'w-0'}`}>
+          <div className='flex flex-col text-gray-700'>
+            <div onClick={()=>setVisible(false)} className="flex items-center gap-4 p-3">
+              <img className='h-4 rotate-180 cursor-pointer text-black' src={assets.dropdown_icon} alt="" />
+                <p>Back</p>
+            </div>
+          </div>
+          <NavLink onClick={()=>setVisible(false)} className='flex py-1 pl-4 border content-center items-center flex-col hover:bg-black hover:text-white' to='/'>HOME</NavLink>
+          <NavLink onClick={()=>setVisible(false)} className='flex py-1 pl-4 border content-center items-center flex-col hover:bg-black hover:text-white' to='/collection'>COLLECTION</NavLink>
+          <NavLink onClick={()=>setVisible(false)} className='flex py-1 pl-4 border content-center items-center flex-col hover:bg-black hover:text-white' to='/about'>ABOUT</NavLink>
+          <NavLink onClick={()=>setVisible(false)} className='flex py-1 pl-4 border content-center items-center flex-col hover:bg-black hover:text-white' to='/contact'>CONTACT</NavLink>
+      </div>
+            
+    </nav>
   )
 }
 
