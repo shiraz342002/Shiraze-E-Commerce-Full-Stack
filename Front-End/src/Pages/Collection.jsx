@@ -9,13 +9,14 @@ function Collection() {
   const [showfilter, setShowFilter] = useState(false);
   const [filterProducts, setFilterProdcuts] = useState([]);
   const [category, setCategory] = useState([]);
-  const [advanceCategory, setAdvanceCategory] = useState([]);
+  const [subCategory, setsubCategory] = useState([]);
+  const [sortType,setSortType]=useState('relevant')
 
   const toggleAdvanceCategory = (e) => {
-    if (advanceCategory.includes(e.target.value)) {
-      setAdvanceCategory(prev=>prev.filter(item=>item!==e.target.value));
+    if (subCategory.includes(e.target.value)) {
+      setsubCategory(prev=>prev.filter(item=>item!==e.target.value));
     } else {
-      setAdvanceCategory(prev=>[...prev,e.target.value])
+      setsubCategory(prev=>[...prev,e.target.value])
     }
   };
 
@@ -26,27 +27,26 @@ function Collection() {
     } else {
       setCategory((prev) => [...prev, e.target.value]);
     }
-
   };
 
+  //abanoded
+
   // useEffect(() => {
-  //   console.log(advanceCategory);
-  // }, [advanceCategory]);
+  //   console.log(subCategory);
+  // }, [subCategory]);
+
 
   // useEffect(() => {
   //   // console.log(category);
-  // }, [category]);
-
-
-
+  // }, [category])hange
 
   const applyfilter = () => {
     let products_copy = products.slice();
     if (category.length > 0) {
       products_copy = products_copy.filter((item) => category.includes(item.category));
     }    
-    if(advanceCategory.length > 0){
-      products_copy=products_copy.filter(item=>advanceCategory.includes(item.advanceCategory))
+    if(subCategory.length > 0){
+      products_copy=products_copy.filter(item=>subCategory.includes(item.subCategory))
     }    
     setFilterProdcuts(products_copy);
   };
@@ -54,13 +54,31 @@ function Collection() {
   //With filters
   useEffect(() => {
     applyfilter();
-  }, [category, advanceCategory]);
+  }, [category, subCategory]);
 
   //without filters
   useEffect(() => {
     setFilterProdcuts(products);
   }, []);
 
+ 
+  const sort=()=>{
+    let filter_products_copy = filterProducts.slice()
+    switch(sortType){
+      case 'low-high':
+        setFilterProdcuts(filter_products_copy.sort((a,b)=>(a.price-b.price)))
+        break;
+      case 'high-low':
+        setFilterProdcuts(filter_products_copy.sort((a,b)=>(b.price-a.price)))
+      default:
+        applyfilter()
+        break;
+    }
+  }
+
+    useEffect(() => {
+      sort();
+    }, [sortType]);
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t">
       <div className="min-w-[240px]">
@@ -98,7 +116,7 @@ function Collection() {
           <p className="mb-3 text-sm font-medium">TYPE</p>
           <div className="flex flex-col gap-3 text-sm text-gray-700">
             <p>
-              <input className="w-3 mr-2" type="checkbox" value={"Topwear"} onClick={(e)=>toggleAdvanceCategory(e)} />{" "}
+              <input className="w-3 mr-2" type="checkbox" value={"Topwear"} onChange={(e)=>toggleAdvanceCategory(e)} />{" "}
               Topwear
             </p>
             <p>
@@ -106,7 +124,7 @@ function Collection() {
                 className="w-3 mr-2"
                 type="checkbox"
                 value={"Bottomwear"}
-                 onClick={(e)=>toggleAdvanceCategory(e)}
+                 onChange={(e)=>toggleAdvanceCategory(e)}
               />{" "}
               Bottomwear
             </p>
@@ -115,7 +133,7 @@ function Collection() {
                 className="w-3 mr-2"
                 type="checkbox"
                 value={"Winterwear"}
-                 onClick={(e)=>toggleAdvanceCategory(e)}
+                 onChange={(e)=>toggleAdvanceCategory(e)}
               />{" "}
               Winterwear
             </p>
@@ -125,8 +143,8 @@ function Collection() {
       <div className="flex-1">
         <div className="flex justify-between text-base sm:text-2xl mb-4">
           <Title heading1={"ALL"} heading2={"COLLECTIONS"} />
-          <select className="border-2 font-medium border-gray-200 px-2 text-sm" name="" id="">
-            <option value="relevent">Sort by : Relevant </option>
+          <select onChange={(e)=>setSortType(e.target.value)}  className="border-2 font-medium border-gray-200 px-2 text-sm" name="" id="">
+            <option value="relevant">Sort by : Relevant </option>
             <option value="low-high">Sort by : Low to High</option>
             <option value="high-low">Sort by : High to Low</option>
           </select>
