@@ -5,7 +5,7 @@ import Collection from './Pages/Collection'
 import Navbar from './components/Navbar'
 const App = () => {
   return (
-    <div class="px-4 sm:px-6 md:px-8 lg:px-10">
+    <div class="px-4 sm:px-6 md:px-8 lg:px-28">
     <Navbar/>
       <Routes>
         <Route path='/'element={<Home/>}></Route>

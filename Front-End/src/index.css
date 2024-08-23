@@ -10,3 +10,9 @@ a.active hr{
 *{
     font-family: "Bitter", serif;
 }
+@media(max-width:640px){
+    a.active{
+        background-color: black;
+        color: white;
+    }
+}
