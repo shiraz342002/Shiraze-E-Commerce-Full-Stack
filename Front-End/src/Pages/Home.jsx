@@ -14,7 +14,7 @@ function Home() {
     <BestSeller/>
     <Policies/>
     <Subscription/>
-    <Footer/>
+    
     </div>
   )
 }

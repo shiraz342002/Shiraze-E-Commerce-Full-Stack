@@ -3,6 +3,7 @@ import Home from './Pages/Home'
 import {Routes,Route} from "react-router-dom"
 import Collection from './Pages/Collection'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 const App = () => {
   return (
     <div class="px-4 sm:px-6 md:px-8 lg:px-28">
@@ -11,6 +12,7 @@ const App = () => {
         <Route path='/'element={<Home/>}></Route>
         <Route path='/collection'element={<Collection/>}></Route>
       </Routes>
+      <Footer/>
     </div>
   )
 }
