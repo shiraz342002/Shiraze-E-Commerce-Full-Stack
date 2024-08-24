@@ -14,8 +14,10 @@ function Collection() {
 
   const toggleAdvanceCategory = (e) => {
     if (subCategory.includes(e.target.value)) {
+      //remove if already exsists 
       setsubCategory(prev=>prev.filter(item=>item!==e.target.value));
     } else {
+      //Add if now already there
       setsubCategory(prev=>[...prev,e.target.value])
     }
   };
@@ -153,7 +155,7 @@ function Collection() {
             <option value="high-low">Sort by : High to Low</option>
           </select>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
           {
             filterProducts.map((item, index) => (
               <ProductItem key={index} id={item._id} image={item.image} name={item.name} price={item.price} />
