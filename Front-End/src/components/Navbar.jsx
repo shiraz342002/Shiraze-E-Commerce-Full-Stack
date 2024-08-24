@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import shiraz_logo from "../assets/Website-Logo/logo.png"
 import { NavLink,Link } from 'react-router-dom'
 import {assets} from "../assets/assets.js"
+import { StoreContext } from '../Store/StoreData.jsx'
 function Navbar() {
   const [visible,setVisible]=useState(false)
+  const {setShowSearch} = useContext(StoreContext)
   return (
     <nav className='flex item-center justify-between py-5 font-medium'>
       <Link to={'/'}>
@@ -28,7 +30,7 @@ function Navbar() {
         </NavLink>
       </ul>
       <div className='flex items-center gap-5 cursor-pointer'>
-        <img src={assets.search_icon} alt="Search-Icon" className='w-5' />
+        <img onClick={()=>setShowSearch(true)} src={assets.search_icon} alt="Search-Icon" className='w-5' />
         <div className="group relative">
             <img src={assets.profile_icon} className='w-5 cursor-pointer' alt="" />
             <div className='group-hover:block hidden absolute right-0 drop-down-menu pt-4'>
