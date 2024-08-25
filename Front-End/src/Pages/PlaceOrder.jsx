@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Title from '../components/Title'
 import CartTotal from '../components/CartTotal'
 import { assets } from '../assets/assets'
+import { StoreContext } from '../Store/StoreContext'
 
 const PlaceOrder = () => {
 
   const [paymentMethod,setPaymentMethod]=useState('cod')
-  useEffect(()=>{
+  const  {navigate}=useContext(StoreContext)
+    useEffect(()=>{
     console.log(paymentMethod);
 
   },[paymentMethod])
@@ -56,6 +58,9 @@ const PlaceOrder = () => {
                 <p className='text-gray-500 text-sm font-medium mx-4'>CASH ON DELIVERY</p>
         </div>
       </div>
+        <div className='mt-10 text-end w-full'>
+          <button onClick={()=>navigate('/orders')} className='border py-3 px-16 bg-black text-white'>PLACE ORDER</button>
+        </div>
     </div>
     </div>
   )
