@@ -3,7 +3,7 @@ import { StoreContext } from '../Store/StoreContext.jsx'
 import Title from "../components/Title.jsx"
 import { assets } from '../assets/assets.js'
 const Cart = () => {
-    const { products, cartItems, currency, delivery_fee } = useContext(StoreContext)
+    const { products, cartItems, currency, delivery_fee,updateQuantity } = useContext(StoreContext)
     const [cartData, setCartData] = useState([]);
     // console.log(cartItems);
     const tempData = [];
@@ -45,7 +45,7 @@ const Cart = () => {
                             </div>
                             </div>
                             <input className='border max-w-10 sm:max-w-20 sm:px-2 px-1 py-1 text-center' type="number" defaultValue={item.quantity} min={item.quantity}/>
-                            <img className='w-4 sm:w-5 mr-5 cursor-pointer' src={assets.bin_icon} alt="" />
+                            <img onClick={()=>updateQuantity(item._id,item.size,0)} className='w-4 sm:w-5 mr-5 cursor-pointer' src={assets.bin_icon} alt="" />
                         </div>
 
                       )
