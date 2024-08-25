@@ -5,7 +5,7 @@ import 'remixicon/fonts/remixicon.css';
 const Footer = () => {
   return (
     <div>
-   <div className='flex flex-col sm:grid grid-cols-[2fr_1fr_1fr_1fr] gap-14 my-10 mt-40 text-sm'>
+   <div className='flex  flex-col sm:grid grid-cols-[2fr_1fr_1fr_1fr] gap-14 my-10 mt-40 text-sm'>
     <div className=''>
         <img src={assets.logo} className=' w-24' alt="" />
         <p className='w-full md:w-1/3 font-medium text-gray-600'>
