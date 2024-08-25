@@ -6,9 +6,10 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import SearchBar from './components/SearchBar'
 import Product from './Pages/Product'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cart from './Pages/Cart'
+import PlaceOrder from './Pages/PlaceOrder'
 const App = () => {
   return (
     <div class="px-4 sm:px-6 md:px-8 lg:px-28">
@@ -20,6 +21,7 @@ const App = () => {
         <Route path='/collection'element={<Collection/>}></Route>
         <Route path='/product/:productId' element={<Product/>}></Route>
         <Route path='/cart'element={<Cart/>}></Route>
+        <Route path='/place-order'element={<PlaceOrder/>}></Route>
 
       </Routes>
       <Footer/>
