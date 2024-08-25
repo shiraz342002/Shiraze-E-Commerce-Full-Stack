@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { StoreContext } from '../Store/StoreData'
+import { StoreContext } from '../Store/StoreContext'
 import { assets } from '../assets/assets';
 import Title from "../components/Title"
 import RelatedProdcuts from '../components/RelatedProdcuts';
 
 const Product = () => {
   const { productId } = useParams();
-  const { products } = useContext(StoreContext);
+  const { products,addToCart } = useContext(StoreContext);
   const [productData, setProductData] = useState(false);
   const [image, setimage] = useState('')
   const { currency } = useContext(StoreContext)
@@ -30,6 +30,11 @@ const Product = () => {
   const setMainImage = (item) => {
     setimage(item)
   }
+
+  //For Debugging
+  // useEffect(()=>{
+  //   console.log(size);
+  // },[size])
   return productData ? (
     <div className='border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100'>
       <div className='flex gap-12 sm:gap-12 flex-col sm:flex-row'>
@@ -71,7 +76,7 @@ const Product = () => {
                   ))}
               </div>
           </div>
-         <button className='bg-black text-white py-3 px-5 text-1xl active:bg-gray-800 '>ADD TO CART</button>
+         <button onClick={()=>addToCart(productData._id,size)} className='bg-black text-white py-3 px-5 text-1xl active:bg-gray-800 '>ADD TO CART</button>
          <hr className='mt-9 sm:w-4/5' />
          <div className='mt-8 text-gray-600 text-1xl flex flex-col '>
           <p>100% Original product.</p>
@@ -92,7 +97,7 @@ const Product = () => {
           </div>
       </div>
       <div className=''>
-          
+            {/* Related products */}
           <RelatedProdcuts category={productData.category} subCategory={productData.subCategory}/>
       </div>
 

@@ -2,10 +2,13 @@ import React, { useContext, useState } from 'react'
 import shiraz_logo from "../assets/Website-Logo/logo.png"
 import { NavLink,Link } from 'react-router-dom'
 import {assets} from "../assets/assets.js"
-import { StoreContext } from '../Store/StoreData.jsx'
+import { StoreContext } from '../Store/StoreContext.jsx'
+
+
 function Navbar() {
   const [visible,setVisible]=useState(false)
-  const {setShowSearch} = useContext(StoreContext)
+  const {setShowSearch,getCartCount} = useContext(StoreContext)
+
   return (
     <nav className='flex item-center justify-between py-5 font-medium'>
       <Link to={'/'}>
@@ -41,10 +44,10 @@ function Navbar() {
                 </div>
             </div>
         </div>
-        <Link to={'/cart'} className='relative'>
+        <Link to='/cart' className='relative'>
          <img src={assets.cart_icon} className='w-5' alt="Cart Icon" />
              <p className='absolute top-[-10px] right-[-10px] bg-red-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center'>
-             0   
+             {getCartCount()}   
              </p>
             </Link>
             <img onClick={()=>{setVisible(true)}} src={assets.menu_icon} alt="" className='w-5 sm:hidden cursor-pointer ' />
