@@ -9,20 +9,20 @@ const CartTotal = () => {
       <div className='text-2xl sm:text-3xl '>
         <Title heading1={"CART"} heading2={"TOTALS"}/>
       </div>
-         <div className='flex flex-col gap-3 mt-2 text-sm'>
+         <div className='flex flex-col gap-3 mt-2 text-sm font-medium'>
          <div className='flex justify-between'>
             <p>Subtotal</p>
-            <p>{currency} {getCartTotalAmount()}.00</p>
+            <p class="font-semibold">{currency} {getCartTotalAmount()}.00</p>
          </div>
          <hr />
          <div className='flex justify-between'>
             <p>Shipping Fee</p>
-            <p>{currency} {delivery_fee}.00</p>
+            <p class="font-semibold">{currency} {delivery_fee}.00</p>
          </div>
          <hr />
          <div className='flex justify-between'>
-            <p className='font-bold'>Total</p>
-            <p>{currency} {getCartTotalAmount() === 0 ? 0: getCartTotalAmount()+delivery_fee}.00</p>
+            <p className='font-bold text-1xl'>Total</p>
+            <p class="font-bold">{currency} {getCartTotalAmount() === 0 ? 0: getCartTotalAmount()+delivery_fee}.00</p>
          </div>
          </div>
     </div>

@@ -4,7 +4,6 @@ import LatestCollection from '../components/LatestCollection'
 import BestSeller from '../components/BestSeller'
 import Policies from '../components/Policies'
 import Subscription from '../components/Subscription'
-import Footer from '../components/Footer'
 
 function Home() {
   return (
@@ -14,7 +13,6 @@ function Home() {
     <BestSeller/>
     <Policies/>
     <Subscription/>
-    
     </div>
   )
 }

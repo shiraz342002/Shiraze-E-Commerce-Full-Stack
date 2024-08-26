@@ -77,8 +77,10 @@ import shiraz_logo from "./Website-Logo/logo.png"
 import hansdsome_man from "./Header-Image.jpg"
 import hansdsome_man2 from "./Header-Image-2.jpg"
 import hansdsome_man3 from "./Header-Image-3.jpg"
+import jazzcash from "./jazzcash.png"
 
 export const assets = {
+    jazzcash,
     hansdsome_man2,
     hansdsome_man3,
     hansdsome_man,
