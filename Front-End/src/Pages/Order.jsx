@@ -32,6 +32,7 @@ const Order = () => {
                   <p className='min-w-2 h-2 rounded-full bg-green-500'></p>
                   <p className='text-sm md:text-base'>Order Placed</p>
                 </div>
+                <button className='py-2 px-4 border font-medium text-1xl rounded-sm'>Track Order</button>
               </div>
             </div>
           ))

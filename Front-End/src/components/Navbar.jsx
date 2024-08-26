@@ -7,7 +7,7 @@ import { StoreContext } from '../Store/StoreContext.jsx'
 
 function Navbar() {
   const [visible,setVisible]=useState(false)
-  const {setShowSearch,getCartCount} = useContext(StoreContext)
+  const {setShowSearch,getCartCount,navigate} = useContext(StoreContext)
 
   return (
     <nav className='flex item-center justify-between py-5 font-medium'>
@@ -39,7 +39,7 @@ function Navbar() {
             <div className='group-hover:block hidden absolute right-0 drop-down-menu pt-4'>
                 <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
                     <p className='cursto-pointer hover:text-black'>My Profile</p>
-                    <p className='cursto-pointer hover:text-black'>My Orders</p>
+                    <p navigate='/orders' className='cursto-pointer hover:text-black'>My Orders</p>
                     <p className='cursto-pointer hover:text-black'>Logout</p>
                 </div>
             </div>
