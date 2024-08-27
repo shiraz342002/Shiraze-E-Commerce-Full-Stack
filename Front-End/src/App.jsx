@@ -1,39 +1,45 @@
-import React from 'react'
-import Home from './Pages/Home'
-import {Routes,Route} from "react-router-dom"
-import Collection from './Pages/Collection'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import SearchBar from './components/SearchBar'
-import Product from './Pages/Product'
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Cart from './Pages/Cart'
-import PlaceOrder from './Pages/PlaceOrder'
-import Order from './Pages/Order'
-import Login from './Pages/Login'
-import About from './Pages/About'
-import Contact from './Pages/Contact'
+import Navbar from './components/Navbar';
+import SearchBar from './components/SearchBar';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Collection from './Pages/Collection';
+import Product from './pages/Product';
+import Cart from './pages/Cart';
+import PlaceOrder from './pages/PlaceOrder';
+import Order from './pages/Order';
+import Login from './pages/Login';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import AdminPanel from './Pages/AdminPanel';
+import { Route,Routes } from 'react-router-dom';
 const App = () => {
+  const location = useLocation();
+  const isAdminPanel = location.pathname === '/adminpanel';
+
   return (
-    <div class="px-4 sm:px-6 md:px-8 lg:px-28">
-    <ToastContainer/>
-    <Navbar/>
-    <SearchBar/>
+    <div className={!isAdminPanel ? "px-4 sm:px-6 md:px-8 lg:px-28" : ""}>
+      <ToastContainer/>
+      {!isAdminPanel && <Navbar />}
+      {!isAdminPanel && <SearchBar />}
       <Routes>
-        <Route path='/'element={<Home/>}></Route>
-        <Route path='/collection'element={<Collection/>}></Route>
-        <Route path='/product/:productId' element={<Product/>}></Route>
-        <Route path='/cart'element={<Cart/>}></Route>
-        <Route path='/place-order'element={<PlaceOrder/>}></Route>
-        <Route path='/orders'element={<Order/>}></Route>
-        <Route path='/login'element={<Login/>}></Route>
-        <Route path='/about'element={<About/>}></Route>
-        <Route path='/contact'element={<Contact/>}></Route>
+        <Route path='/' element={<Home />} />
+        <Route path='/collection' element={<Collection />} />
+        <Route path='/product/:productId' element={<Product />} />
+        <Route path='/cart' element={<Cart />} />
+        <Route path='/place-order' element={<PlaceOrder />} />
+        <Route path='/orders' element={<Order />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path='/adminpanel' element={<AdminPanel />} />
       </Routes>
-      <Footer/>
+      {!isAdminPanel && <Footer />}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

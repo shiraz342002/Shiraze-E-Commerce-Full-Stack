@@ -31,6 +31,7 @@ function Navbar() {
           <p className='text-base'>CONTACT</p>
           <hr className='w-3/4  border-none h-[1.6px] bg-gray-700 mx-auto hidden' />
         </NavLink>
+        <button onClick={()=>navigate('/adminpanel')} className='border py-3 px-4 rounded-2xl	flex flex-col item-center gap-1'>Admin Panel</button>
       </ul>
       <div className='flex items-center gap-5 cursor-pointer'>
         <img onClick={() => {setShowSearch(true); navigate('/collection')}}  src={assets.search_icon} alt="Search-Icon" className='w-5' />

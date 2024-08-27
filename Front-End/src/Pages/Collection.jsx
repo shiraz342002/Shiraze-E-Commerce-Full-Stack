@@ -70,7 +70,6 @@ function Collection() {
         break;
     }
   }
-
   useEffect(() => {
     sort();
   }, [sortType]);

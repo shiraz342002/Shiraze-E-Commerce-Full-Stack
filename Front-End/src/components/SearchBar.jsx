@@ -15,8 +15,6 @@ const SearchBar = () => {
         }
         
     },[location])
-
-
     return showSearch && visible ? (
         <div className='border-t border-b bg-gray-100'>
             <div className='flex items-center justify-center py-5'>
