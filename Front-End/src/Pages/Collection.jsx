@@ -31,16 +31,7 @@ function Collection() {
     }
   };
 
-  //abanoded
 
-  // useEffect(() => {
-  //   console.log(subCategory);
-  // }, [subCategory]);
-
-
-  // useEffect(() => {
-  //   // console.log(category);
-  // }, [category])hange
 
   const applyfilter = () => {
     let products_copy = products.slice();
