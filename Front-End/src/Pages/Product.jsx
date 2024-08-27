@@ -6,12 +6,12 @@ import RelatedProdcuts from '../components/RelatedProdcuts';
 
 const Product = () => {
   const { productId } = useParams();
-  const { products,addToCart } = useContext(StoreContext);
+  const { products, addToCart } = useContext(StoreContext);
   const [productData, setProductData] = useState(false);
   const [image, setimage] = useState('')
   const { currency } = useContext(StoreContext)
-  const [size,setSize]=useState('')
-  
+  const [size, setSize] = useState('')
+
   const getProductData = () => {
     products.map((item) => {
       if (item._id === productId) {
@@ -66,38 +66,38 @@ const Product = () => {
           </div>
           <p className='font-bold mt-2 text-2xl'>{currency} {productData.price}</p>
           <p className='text-gray-500 mt-3 w-4/5 md:4/5'>{productData.description}</p>
-          <div className='flex flex-col gap-3 my-7'> 
+          <div className='flex flex-col gap-3 my-7'>
             <p className='font-bold text-1xl'>Select Size</p>
-              <div className="flex gap-2">
-                {
-                  productData.sizes.map((item,index)=>(
-                    <button onClick={()=>setSize(item)} className={`border py-2 px-4 bg-grey-100 ${item===size ? 'border-red-500': ''} `} key={index}>{item}</button>
-                  ))}
-              </div>
+            <div className="flex gap-2">
+              {
+                productData.sizes.map((item, index) => (
+                  <button onClick={() => setSize(item)} className={`border py-2 px-4 bg-grey-100 ${item === size ? 'border-red-500' : ''} `} key={index}>{item}</button>
+                ))}
+            </div>
           </div>
-         <button onClick={()=>addToCart(productData._id,size)} className='bg-black text-white py-3 px-5 text-1xl active:bg-gray-800 '>ADD TO CART</button>
-         <hr className='mt-9 sm:w-4/5' />
-         <div className='mt-8 text-gray-600 text-1xl flex flex-col '>
-          <p>100% Original product.</p>
-          <p>Cash on delivery is available on this product.</p>
-          <p>Easy return and exchange policy within 7 days.</p>
-         </div>
+          <button onClick={() => addToCart(productData._id, size)} className='bg-black text-white py-3 px-5 text-1xl active:bg-gray-800 '>ADD TO CART</button>
+          <hr className='mt-9 sm:w-4/5' />
+          <div className='mt-8 text-gray-600 text-1xl flex flex-col '>
+            <p>100% Original product.</p>
+            <p>Cash on delivery is available on this product.</p>
+            <p>Easy return and exchange policy within 7 days.</p>
+          </div>
         </div>
       </div>
       {/* Description & review */}
       <div className='mt-20'>
-          <div className='flex'>
-                  <b className="border px-5 py-3 text-sm">Description</b>
-                  <b className="border px-5 py-3 text-sm">Reviews (69)</b>
-          </div>
-          <div className='flex flex-col border py-5 px-8 gap-3 text-sm'>
+        <div className='flex'>
+          <b className="border px-5 py-3 text-sm">Description</b>
+          <b className="border px-5 py-3 text-sm">Reviews (69)</b>
+        </div>
+        <div className='flex flex-col border py-5 px-8 gap-3 text-sm'>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt tenetur, similique qui illum quisquam suscipit. Et ea eius officia nulla in porro sit minus suscipit illum minima rerum possimus vitae libero nisi quis excepturi voluptates, atque labore, earum deleniti exercitationem nam. Illum, possimus modi!</p>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam dolor veritatis tempora voluptatum odio, provident distinctio possimus molestiae quae. Sint facilis voluptatem nesciunt, sed quasi beatae quos perspiciatis sapiente veritatis.</p>
-          </div>
+        </div>
       </div>
       <div className=''>
-            {/* Related products */}
-          <RelatedProdcuts category={productData.category} subCategory={productData.subCategory}/>
+        {/* Related products */}
+        <RelatedProdcuts category={productData.category} subCategory={productData.subCategory} />
       </div>
     </div>
   ) : <div className='opacity-0'></div>
