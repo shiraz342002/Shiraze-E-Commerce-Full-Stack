@@ -5,7 +5,6 @@ import { StoreContext } from "../Store/StoreContext";
 const AdminPanel = () => {
   const [activeSection, setActiveSection] = useState('');
   const { products } = useContext(StoreContext)
-
   const handleImageClick = (event) => {
     const targetId = event.currentTarget.getAttribute('htmlFor');
     document.getElementById(targetId).click();
@@ -13,21 +12,27 @@ const AdminPanel = () => {
   const handleNavClick = (section) => {
     setActiveSection(section);
   };
-  useEffect(() => {
-    console.log(products);
-  }, [])
+  // useEffect(() => {
+  //   console.log(products);
+  // }, [])
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <header className="flex items-center justify-between p-4 bg-white shadow-md">
-        <img
-          className="w-24 cursor-pointer transition-transform transform hover:scale-105"
-          src={assets.shiraz_logo}
-          alt="Logo"
-        />
-        <button className="bg-black text-white py-1 px-4 rounded-md shadow-sm hover:bg-gray-700 transition-colors duration-200">
-          Logout
-        </button>
-      </header>
+    <header className="flex items-center justify-between p-4 bg-gray-800 shadow-lg">
+  <div className="flex items-center space-x-4">
+    <img
+      className="w-24 cursor-pointer transition-transform transform hover:scale-105"
+      src={assets.shiraz_logo}
+      alt="Logo"
+    />
+    <h1 className="text-white text-2xl font-semibold tracking-wide transition-all duration-300 transform hover:scale-110 hover:text-gray-300">
+      Admin Panel
+    </h1>
+  </div>
+  <button className="bg-red-600 text-white py-1 px-4 rounded-md shadow-sm hover:bg-red-700 transition-colors duration-200">
+    Logout
+  </button>
+</header>
       <hr className="border-gray-300" />
       <div className="flex flex-1 bg-white" >
         <aside className="w-[18%] bg-white border-r border-gray-200 shadow-sm">
@@ -136,7 +141,7 @@ const AdminPanel = () => {
               <div className="mt-4 flex flex-col sm:flex-row gap-8 w-full sm:gap-8 ">
                 <div>
                   <p className="mb-4">Product Category</p>
-                  <select className="px-2 w-full py-2" >
+                  <select className="px-2 w-full py-2 border-gray-300 border" >
                     <option value="Men">Men</option>
                     <option value="Women">Women</option>
                     <option value="Kids">Kids</option>
@@ -144,16 +149,15 @@ const AdminPanel = () => {
                 </div>
                 <div>
                   <p className="mb-4">Sub Category</p>
-                  <select className="px-3 w-full py-2" >
+                  <select className="px-3 w-full py-2 border-gray-300 border" >
                     <option value="Topwear">Topwear</option>
                     <option value="Bottomwear">Bottomwear</option>
                     <option value="Winterwear">Winterwear</option>
                   </select>
-
                 </div>
                 <div>
                   <p className="mb-4">Product Price</p>
-                  <input className="py-2 px-4 w-full sm:w-[120px]" type="number" placeholder="30" />
+                  <input className="py-2 px-4 w-full sm:w-[120px] border-gray-300 border" type="number" placeholder="30" />
                 </div>
               </div>
               <div>
@@ -194,7 +198,6 @@ const AdminPanel = () => {
                   <b>Price</b>
                   <b>Action</b>
                 </div>
-
                 {products.map((item, index) => (
                   <div
                     key={index}
@@ -207,8 +210,6 @@ const AdminPanel = () => {
                     <img className="w-3 cursor-pointer" src={assets.cross_icon} alt="Delete" />
                   </div>
                 ))}
-
-
               </div>
             </>
           )}
