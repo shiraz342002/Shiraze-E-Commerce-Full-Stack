@@ -1,6 +1,6 @@
 import React from 'react'
 import Title from '../components/Title'
-import { assets } from '../assets/assets'
+import { assets } from "../assets/front-end-assets/assets";
 const Contact = () => {
   return (
     <div>

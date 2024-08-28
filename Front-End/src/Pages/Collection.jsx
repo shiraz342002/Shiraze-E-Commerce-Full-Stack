@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../Store/StoreContext";
-import { assets } from "../assets/assets";
+import { assets } from "../assets/front-end-assets/assets";
 import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
 

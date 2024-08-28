@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
-import shiraz_logo from "../assets/Website-Logo/logo.png"
+import shiraz_logo from "../assets/front-end-assets/Website-Logo/logo.png"
 import { NavLink, Link } from 'react-router-dom'
-import { assets } from "../assets/assets.js"
+import { assets } from "../assets/front-end-assets/assets";
 import { StoreContext } from '../Store/StoreContext.jsx'
 
 

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { StoreContext } from '../Store/StoreContext'
-import { assets } from '../assets/assets';
+import { assets } from "../assets/front-end-assets/assets";
 import RelatedProdcuts from '../components/RelatedProdcuts';
 
 const Product = () => {
