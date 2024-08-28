@@ -10,8 +10,7 @@ const validate = (schema) => (req, res, next) => {
         .validate(object);
 
     if (error) {
-        const errorMessage = error.details.map((details) => details.message).join(', ');
-        return res.status(401).json((errorMessage));
+        return  res.status(400).json({ message: error.details.map(detail => detail.message).join(', ') });
     }
     Object.assign(req, value);
     return next();

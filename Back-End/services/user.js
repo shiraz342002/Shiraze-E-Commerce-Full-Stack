@@ -1,47 +1,14 @@
-import UserModel from "../models/user.js";
-import passwordHash from "password-hash";
+import UserModel from "../models/user.js"; 
+import bcrypt from "bcryptjs";
+import config from "../config/index.js";
 import jwt from "jsonwebtoken";
+import httpResponse from "../utils/httpResponse.js";
 
 const UserService = {
   getAll: async () => {
     try {
-      // I am using aggregate because I want to get all the users and their products' length. 
-      const data = await UserModel.aggregate([
-        { $match: { is_active: true } },
-        { $project: { password: 0 } },
-        {
-          $lookup: {
-            from: "products",
-            let: { userId: "$_id" },
-            pipeline: [
-              {
-                $match: {
-                  $expr: {
-                    $and: [
-                      { $eq: ["$user_id", "$$userId"] },
-                      { $eq: ["$is_active", true] },
-                    ],
-                  },
-                },
-              },
-            ],
-            as: "products",
-          },
-        },
-      ]);
-
-      if (data) {
-        const countData = data.map((user) => {
-          return {
-            ...user,
-            products: user.products.length,
-          };
-        });
-        return { message: "success", data: countData };
-      } else {
-        // TODO document why this block is empty
-      
-      }
+      const users = await UserModel.find();
+      return { message: "success", data: users };
     } catch (error) {
       return { message: "error", data: error.message };
     }
@@ -49,121 +16,77 @@ const UserService = {
 
   getById: async (id) => {
     try {
-      const data = await UserModel.findById(id).select({ password: 0 });
-
-      if (data) {
-        return { message: "success", data };
+      const user = await UserModel.findById(id); 
+      if (!user) {
+        return { message: "error", data: "User not found" };
       }
+      return { message: "success", data: user };
     } catch (error) {
       return { message: "error", data: error.message };
     }
   },
 
-  getByEmail: async (email) => {
+  add: async (userData) => {
     try {
-      const data = await UserModel.find({ email: email });
-
-      if (data) {
-        return { message: "success", data };
+      const existingUser = await UserModel.findOne({ email: userData.email });
+      if (existingUser) {
+        return { message: "failed", data: "User already exists" };
       }
+      const salt = await bcrypt.genSalt(10);
+      userData.password = await bcrypt.hash(userData.password, salt);
+      const newUser = new UserModel(userData);
+      await newUser.save();
+      return { message: "success", data: newUser };
     } catch (error) {
       return { message: "error", data: error.message };
     }
   },
 
-  login: async ({ email, password }) => {
+  login: async (loginData) => {
     try {
-      const data = await UserModel.findOne({ email });
-
-      if (!data) {
-        return { message: "error", data: "Email is wrong" };
+      const user = await UserModel.findOne({ email: loginData.email });
+      if (!user) {
+        return { message: "error", data: "Invalid email or password" };
       }
 
-      const isVerified = passwordHash.verify(
-        password,
-        data.password
-      );
-
-      if (!isVerified) {
-        return { message: "error", data: "Password is wrong" };
+      const isMatch = await bcrypt.compare(loginData.password, user.password);
+      if (!isMatch) {
+        return { message: "error", data: "Invalid email or password" };
       }
 
-      delete data._doc.password;
-      const token = await jwt.sign(data._doc, "my_temporary_secret");
-      if (token) {
-        return { message: "success", data: { token } };
-      } else {
-        return { message: "error", data: "Token is not generated" };
-      }
+      const token = jwt.sign({ user: user }, config.env.jwtSecret, { expiresIn: '1h' });
+      return { message: "success", data: { token } };
     } catch (error) {
       return { message: "error", data: error.message };
     }
   },
 
-  add: async (body) => {
+
+  update: async (userData) => {
     try {
-      const data = await UserModel.findOne({ email: body.email });
-      if (data) {
-        return { message: "failed", data: "User already exist" };
+      console.log("XD");
+      
+      const updatedUser = await UserModel.findByIdAndUpdate(userData.id, userData, { new: true });
+      if (!updatedUser) {
+        return { message: "error", data: "User not found" };
       }
-
-      const hashedPassword = passwordHash.generate(body.password);
-      body.password = hashedPassword;
-      body.role = 'vendor';
-
-      const savedData = await UserModel.create(body);
-      if (savedData) {
-        return { message: "success", data: savedData };
-      }
-    } catch (error) {
-      return { message: "error", data: error.message };
-    }
-  },
-
-  update: async (body) => {
-    try {
-      const id = body.id;
-      delete body.id;
-      const data = await UserModel.updateOne(
-        { _id: id },
-        { $set: body },
-        { runValidators: true }
-      );
-      if (data) {
-        return { message: "success", data };
-      }
+      return { message: "success", data: updatedUser };
     } catch (error) {
       return { message: "error", data: error.message };
     }
   },
 
   removeById: async (id) => {
-    const data = await UserModel.findOne({ _id: id });
-
-    if (data) {
-      data.is_active = false;
-      const deactivateUser = await data.save();
-      if (deactivateUser) {
-        await ProductModel.updateMany({ user_id: id }, { is_active: false });
-
-        return { message: "success", data };
-      }
-    } else {
-      return { message: "error", data: "User not found" };
-    }
-  },
-
-  userProfile: async (req) => {
-    console.log(req);
     try {
-      const data = await UserModel.findOne({ _id: req.user.user._id });
-      if (data) {
-        return { message: "success", data };
+      const deletedUser = await UserModel.findByIdAndDelete(id);
+      if (!deletedUser) {
+        return { message: "error", data: "User not found" };
       }
+      return { message: "success", data: "User deleted successfully" };
     } catch (error) {
-      throw error;
+      return { message: "error", data: error.message };
     }
-  },
+  }
 };
 
 export default UserService;

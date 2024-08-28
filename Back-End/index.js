@@ -2,10 +2,12 @@ import {} from "dotenv/config";
 import express from "express";
 import loaders from "./loaders/index.js";
 import config from "./config/index.js";
-
+import cors from "cors"
 async function startServer() {
+  
   const app = express();
   await loaders.init({ expressApp: app });
+  app.use(cors());
 
   const server = app.listen(config.env.port, () =>
     console.log(`Server Started ~ :${config.env.port}`)

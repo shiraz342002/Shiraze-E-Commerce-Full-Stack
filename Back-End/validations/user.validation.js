@@ -1,7 +1,8 @@
 import Joi from "joi";
 
-export const UserValidationSchema = {
+const UserValidationSchema = {
   register: {
+    
     body: Joi.object().keys({
       name: Joi.string().trim().required().min(3).max(14).messages({
         "string.base": "Name should be a type of 'text'",
@@ -52,3 +53,5 @@ export const UserValidationSchema = {
     }),
   },
 };
+
+export default UserValidationSchema;

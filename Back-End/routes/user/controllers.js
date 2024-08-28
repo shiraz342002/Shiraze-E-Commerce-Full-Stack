@@ -32,17 +32,19 @@ const controller = {
   },
 
   login: async (req, res) => {
+    console.log("Working");
+    
     const data = await UserService.login(req.body);
     if (data.message === "success") {
-      return httpResponse.SUCCESS(res, data.data, data.data);
+      return httpResponse.SUCCESS(res, data.data);
     } else {
-      return httpResponse.NOT_FOUND(res, data.data, data.data);
+      return httpResponse.NOT_FOUND(res, data.data);
     }
   },
 
   update: async (req, res) => {
     req.body.id = req.params.id;
-
+    console.log("xD");
     const updateResponse = await UserService.update(req.body);
     if (updateResponse.message === "success") {
       return httpResponse.SUCCESS(res, updateResponse.data);
