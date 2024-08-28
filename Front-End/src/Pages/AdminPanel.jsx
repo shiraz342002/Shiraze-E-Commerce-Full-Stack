@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { assets } from "../assets/assets";
-
 const AdminPanel = () => {
   const [activeSection, setActiveSection] = useState('');
   const handleImageClick = (event) => {
@@ -10,7 +9,6 @@ const AdminPanel = () => {
   const handleNavClick = (section) => {
     setActiveSection(section);
   };
-
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       <header className="flex items-center justify-between p-4 bg-white shadow-md">
@@ -69,7 +67,6 @@ const AdminPanel = () => {
         {/* Main Section */}
         <main className="flex-1 p-6 bg-gray-50">
         <div className="">
-
         </div>
           {activeSection === 'add' && (
             <form className="flex flex-col w-full items-start">
