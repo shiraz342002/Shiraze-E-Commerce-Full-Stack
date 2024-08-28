@@ -35,11 +35,11 @@ const controller = {
     console.log("Working");
     const data = await UserService.login(req.body);
     if (data.message === "success") {
-      return httpResponse.SUCCESS(res, data.data);
+        return httpResponse.SUCCESS(res, data.data); // Send token in response
     } else {
-      return httpResponse.NOT_FOUND(res, data.data);
+        return httpResponse.NOT_FOUND(res, data.data);
     }
-  },
+},
 
   update: async (req, res) => {
     req.body.id = req.params.id;

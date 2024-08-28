@@ -44,22 +44,23 @@ const UserService = {
 
   login: async (loginData) => {
     try {
-      const user = await UserModel.findOne({ email: loginData.email });
-      if (!user) {
-        return { message: "error", data: "Invalid email or password" };
-      }
+        const user = await UserModel.findOne({ email: loginData.email });
+        if (!user) {
+            return { message: "error", data: "Invalid email or password" };
+        }
 
-      const isMatch = await bcrypt.compare(loginData.password, user.password);
-      if (!isMatch) {
-        return { message: "error", data: "Invalid email or password" };
-      }
+        const isMatch = await bcrypt.compare(loginData.password, user.password);
+        if (!isMatch) {
+            return { message: "error", data: "Invalid email or password" };
+        }
 
-      const token = jwt.sign({ user: user }, config.env.jwtSecret, { expiresIn: '1h' });
-      return { message: "success", data: { token } };
+        // Generate a token only for login
+        const token = jwt.sign({ user: user }, config.env.jwtSecret, { expiresIn: '1h' });
+        return { message: "success", data: { token } };
     } catch (error) {
-      return { message: "error", data: error.message };
+        return { message: "error", data: error.message };
     }
-  },
+},
 
 
   update: async (userData) => {

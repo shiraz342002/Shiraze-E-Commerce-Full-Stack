@@ -10,17 +10,19 @@ const Login = () => {
         handleSubmit,
         formState: { errors, isSubmitting },
     } = useForm();
+
     const onSubmit = async (data) => {
+        // Remove the name field if it's present in the data and only needed for signup
         if (AccountStatus === 'Login') {
             const { name, ...loginData } = data;
             data = loginData;
         }
-    
+
         try {
             const url = AccountStatus === 'Login'
                 ? "http://localhost:3000/user/login"
                 : "http://localhost:3000/user/register";
-    
+
             let response = await fetch(url, {
                 method: "POST",
                 headers: {
@@ -28,21 +30,22 @@ const Login = () => {
                 },
                 body: JSON.stringify(data),
             });
-    
+
             const responseData = await response.json();
-            console.log('Response Data:', responseData); 
-    
+            console.log('Response Data:', responseData);
+
             if (response.ok) {
-                const token = responseData.data?.token;
-                if (token) {
-                    localStorage.setItem('authToken', token);
-                    if (AccountStatus === 'Login') {
+                if (AccountStatus === 'Login') {
+                    const token = responseData.data?.token;
+                    if (token) {
+                        localStorage.setItem('authToken', token);
                         toast.success("Logged in successfully!");
                     } else {
-                        toast.success("Registered successfully!");
+                        toast.error('Token not received');
                     }
                 } else {
-                    toast.error('Problem with logn try again');
+                    toast.success("Registered successfully!");
+                    setAccountStatus('Login'); // Switch to login after signup
                 }
             } else {
                 toast.error(`Error: ${responseData.meta.message || 'Something went wrong'}`);
@@ -52,7 +55,7 @@ const Login = () => {
             toast.error('An unexpected error occurred.');
         }
     };
-    
+
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 text-gray-700">
