@@ -65,8 +65,8 @@ const AdminPanel = () => {
           </nav>
         </aside>
         <main className="flex-1 p-6 bg-gray-50">
-        <div className="">
-        </div>
+          <div className="">
+          </div>
           {activeSection === 'add' && (
             <form className="flex flex-col w-full items-start">
               <div className="mb-4">
@@ -119,63 +119,63 @@ const AdminPanel = () => {
                 </div>
               </div>
               <div className="w-full">
-              <p className="mt-4">Prodct Name</p>
-              <input class="w-full max-w-[500px] mt-4 px-3 py-2 border border-gray-300" type="text" placeholder="Type here" />
+                <p className="mt-4">Prodct Name</p>
+                <input class="w-full max-w-[500px] mt-4 px-3 py-2 border border-gray-300" type="text" placeholder="Type here" />
 
               </div>
               <div className="w-full">
-              <p className="mt-4">Prodct Description</p>
-              <textarea class="w-full max-w-[500px] mt-4 px-3 py-2 border border-gray-300" type="textarea" placeholder="Type here" />
+                <p className="mt-4">Prodct Description</p>
+                <textarea class="w-full max-w-[500px] mt-4 px-3 py-2 border border-gray-300" type="textarea" placeholder="Type here" />
               </div>
               <div className="mt-4 flex flex-col sm:flex-row gap-8 w-full sm:gap-8 ">
-               <div>
-                <p className="mb-4">Product Category</p>
-                <select className="px-2 w-full py-2" >
-                  <option  value="Men">Men</option>
-                  <option  value="Women">Women</option>
-                  <option  value="Kids">Kids</option>
-                </select>
-               </div>
-               <div>
-                <p className="mb-4">Sub Category</p>
-                <select className="px-3 w-full py-2" >
-                  <option  value="Topwear">Topwear</option>
-                  <option  value="Bottomwear">Bottomwear</option>
-                  <option  value="Winterwear">Winterwear</option>
-                </select>
-                
-               </div>
-               <div>
-                <p className="mb-4">Product Price</p>
-                <input className="py-2 px-4 w-full sm:w-[120px]" type="number" placeholder="30" />
-               </div>
+                <div>
+                  <p className="mb-4">Product Category</p>
+                  <select className="px-2 w-full py-2" >
+                    <option value="Men">Men</option>
+                    <option value="Women">Women</option>
+                    <option value="Kids">Kids</option>
+                  </select>
+                </div>
+                <div>
+                  <p className="mb-4">Sub Category</p>
+                  <select className="px-3 w-full py-2" >
+                    <option value="Topwear">Topwear</option>
+                    <option value="Bottomwear">Bottomwear</option>
+                    <option value="Winterwear">Winterwear</option>
+                  </select>
+
+                </div>
+                <div>
+                  <p className="mb-4">Product Price</p>
+                  <input className="py-2 px-4 w-full sm:w-[120px]" type="number" placeholder="30" />
+                </div>
               </div>
-               <div>
+              <div>
                 <p className=" mt-5">Product Sizes</p>
                 <div className="flex gap-3 mt-3">
                   <div>
-                    <p className="border bg-slate-200 py-1 px-3">S</p>
+                    <p className="border bg-slate-200 py-1 px-3 cursor-pointer">S</p>
                   </div>
                   <div>
-                    <p className="border bg-slate-200 py-1 px-3">M</p>
+                    <p className="border bg-slate-200 py-1 px-3 cursor-pointer">M</p>
                   </div>
                   <div>
-                    <p className="border bg-slate-200 py-1 px-3">L</p>
+                    <p className="border bg-slate-200 py-1 px-3 cursor-pointer">L</p>
                   </div>
                   <div>
-                    <p className="border bg-slate-200 py-1 px-3">XL</p>
+                    <p className="border bg-slate-200 py-1 px-3 cursor-pointer">XL</p>
                   </div>
                   <div>
-                    <p className="border bg-slate-200 py-1 px-3">XLL</p>
+                    <p className="border bg-slate-200 py-1 px-3 cursor-pointer">XLL</p>
                   </div>
                 </div>
                 <div className="mt-5">
-                  <input type="checkbox" id="bestseller"/>
+                  <input type="checkbox" id="bestseller" />
                   <label className="px-4" htmlFor="bestseller">Add to Best Seller</label>
                 </div>
                 <button className=" w-28 mt-5 text-white bg-black py-4 px-10">ADD</button>
-               </div>
-              
+              </div>
+
             </form>
           )}
         </main>
