@@ -33,7 +33,6 @@ const controller = {
 
   login: async (req, res) => {
     console.log("Working");
-    
     const data = await UserService.login(req.body);
     if (data.message === "success") {
       return httpResponse.SUCCESS(res, data.data);

@@ -15,10 +15,12 @@ const Login = () => {
             const { name, ...loginData } = data;
             data = loginData;
         }
+    
         try {
             const url = AccountStatus === 'Login'
                 ? "http://localhost:3000/user/login"
                 : "http://localhost:3000/user/register";
+    
             let response = await fetch(url, {
                 method: "POST",
                 headers: {
@@ -26,24 +28,31 @@ const Login = () => {
                 },
                 body: JSON.stringify(data),
             });
-
+    
+            const responseData = await response.json();
+            console.log('Response Data:', responseData); 
+    
             if (response.ok) {
-                if (AccountStatus === 'Login') {
-                    toast.success("Logged in successfully!");
+                const token = responseData.data?.token;
+                if (token) {
+                    localStorage.setItem('authToken', token);
+                    if (AccountStatus === 'Login') {
+                        toast.success("Logged in successfully!");
+                    } else {
+                        toast.success("Registered successfully!");
+                    }
                 } else {
-                    toast.success("Registered successfully!");
-                    setAccountStatus('Login')
+                    toast.error('Problem with logn try again');
                 }
             } else {
-                const errorData = await response.json();
-                toast.error(`Error: ${errorData.message || 'Something went wrong'}`);
+                toast.error(`Error: ${responseData.meta.message || 'Something went wrong'}`);
             }
         } catch (error) {
             console.error('Error:', error);
             toast.error('An unexpected error occurred.');
         }
     };
-
+    
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 text-gray-700">
