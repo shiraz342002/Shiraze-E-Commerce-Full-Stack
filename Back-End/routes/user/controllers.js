@@ -16,7 +16,7 @@ const controller = {
       const data = await UserService.getById(req.user._id);
       return httpResponse.SUCCESS(res, data.data);
     } catch (error) {
-      return httpResponse.INTERNAL_SERVER_ERROR(res, error);
+      return httpResponse.INTERNAL_SERVER(res, error);
     }
   },
 
@@ -35,7 +35,7 @@ const controller = {
     console.log("Working");
     const data = await UserService.login(req.body);
     if (data.message === "success") {
-        return httpResponse.SUCCESS(res, data.data); // Send token in response
+        return httpResponse.SUCCESS(res, data.data);
     } else {
         return httpResponse.NOT_FOUND(res, data.data);
     }

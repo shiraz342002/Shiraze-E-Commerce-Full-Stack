@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { StoreContext } from '../Store/StoreContext';
 
 const Login = () => {
     const [AccountStatus, setAccountStatus] = useState('Sign Up');
+    const {navigate}= useContext(StoreContext)
     const {
         register,
         handleSubmit,
@@ -33,19 +35,19 @@ const Login = () => {
 
             const responseData = await response.json();
             console.log('Response Data:', responseData);
-
             if (response.ok) {
                 if (AccountStatus === 'Login') {
                     const token = responseData.data?.token;
                     if (token) {
                         localStorage.setItem('authToken', token);
                         toast.success("Logged in successfully!");
+                        navigate('/')
                     } else {
                         toast.error('Token not received');
                     }
                 } else {
                     toast.success("Registered successfully!");
-                    setAccountStatus('Login'); // Switch to login after signup
+                    setAccountStatus('Login'); 
                 }
             } else {
                 toast.error(`Error: ${responseData.meta.message || 'Something went wrong'}`);

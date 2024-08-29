@@ -11,7 +11,7 @@ import Product from './pages/Product';
 import Cart from './pages/Cart';
 import PlaceOrder from './pages/PlaceOrder';
 import Order from './pages/Order';
-import Login from './pages/Login';
+import Login from './Pages/Login';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import AdminPanel from './Pages/AdminPanel';
