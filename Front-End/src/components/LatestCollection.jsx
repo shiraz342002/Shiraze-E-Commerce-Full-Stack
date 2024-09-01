@@ -5,11 +5,13 @@ import ProductItem from './ProductItem'
 
 function LatestCollection() {
     const {products} = useContext(StoreContext)
+    console.log(products);
+    
     const [displaylatestcollection,setdisplaylatestcollection]=useState([])
     useEffect(()=>{
       if(products.length>=10){
        setdisplaylatestcollection(products.slice(0,10))
-      //  console.log(displaylatestcollection);
+      
       }
     },[])
 

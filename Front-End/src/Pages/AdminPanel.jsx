@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useRef } from "react";
 import { assets } from "../assets/front-end-assets/assets";
 import { assets2 } from "../assets/admin_assets/assets";
 import { toast } from 'react-toastify';
@@ -17,6 +17,8 @@ const AdminPanel = () => {
     bestseller: false,
     images: []
   });
+
+  const fileInputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
   const handleNavClick = (section) => {
     setActiveSection(section);
@@ -39,6 +41,10 @@ const AdminPanel = () => {
     }));
   };
 
+  const handleImageClick = (index) => {
+    fileInputRefs[index].current.click();
+  };
+
   const handleImageChange = (e, index) => {
     const files = e.target.files;
     if (files.length > 0) {
@@ -58,6 +64,9 @@ const AdminPanel = () => {
       toast.error("Please fill out all required fields");
       return;
     }
+
+
+    
 
     const newProduct = {
       name: formData.productName,
@@ -79,11 +88,9 @@ const AdminPanel = () => {
         },
         body: JSON.stringify(newProduct),
       });
-      console.log(response);
-      
+
       if (response.ok) {
         const result = await response.json();
-        console.log("Product added:", result);
         toast.success("Product added successfully!");
         setFormData({
           productName: '',
@@ -178,13 +185,13 @@ const AdminPanel = () => {
                         className="w-20 cursor-pointer"
                         src={formData.images[index] || assets2.upload_area}
                         alt="Upload"
-                        onClick={() => document.getElementById(`image${index + 1}`).click()}
+                        onClick={() => handleImageClick(index)}
                       />
                     </label>
                     <input
                       type="file"
                       hidden
-                      id={`image${index + 1}`}
+                      ref={fileInputRefs[index]}
                       onChange={(e) => handleImageChange(e, index)}
                     />
                   </div>
@@ -236,9 +243,6 @@ const AdminPanel = () => {
                     <option value="Topwear">Topwear</option>
                     <option value="Bottomwear">Bottomwear</option>
                     <option value="Winterwear">Winterwear</option>
-                    <option value="Innerwear">Innerwear</option>
-                    <option value="Sleepwear">Sleepwear</option>
-                    <option value="Sportswear">Sportswear</option>
                   </select>
                 </div>
               </div>

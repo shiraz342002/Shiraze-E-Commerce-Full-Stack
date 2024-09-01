@@ -17,6 +17,7 @@ import Contact from './pages/Contact';
 import AdminPanel from './Pages/AdminPanel';
 import { Route,Routes } from 'react-router-dom';
 import MyProfile from './Pages/MyProfile';
+import Test from './Pages/Test';
 const App = () => {
   const location = useLocation();
   const isAdminPanel = location.pathname === '/adminpanel';
@@ -38,6 +39,8 @@ const App = () => {
         <Route path='/contact' element={<Contact />} />
         <Route path='/adminpanel' element={<AdminPanel />} />
         <Route path='/myprofile' element={<MyProfile />} />
+        <Route path='/test' element={<Test />} />
+
       </Routes>
       {!isAdminPanel && <Footer />}
     </div>

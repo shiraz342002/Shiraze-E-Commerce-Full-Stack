@@ -1,10 +1,37 @@
 import { createContext, useEffect, useState } from "react";
-import { products } from "../assets/front-end-assets/assets";
+
 import { toast } from "react-toastify";
 import {useNavigate} from "react-router-dom"
 export const StoreContext = createContext()
 
 const StoreContextProvider=(props)=>{
+    //Fetching products from my backend
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    useEffect(() => {
+        fetch('http://localhost:3000/products/getAll')
+          .then(response => response.json())
+          .then(data => {
+            // Check if data is an array
+            if (Array.isArray(data)) {
+              setProducts(data);
+            } else {
+              setError('Unexpected data format');
+            }
+            setLoading(false);
+          })
+          .catch(error => {
+            setError(error.message);
+            setLoading(false);
+          });
+      }, []);
+    
+      console.log(products);
+      
+
+
+
     const currency="$"
     const delivery_fee=10
     const [search,setSearch]=useState('')

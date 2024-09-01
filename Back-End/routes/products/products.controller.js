@@ -11,6 +11,20 @@ const ProductController = {
     } else {
       return httpResponse.INTERNAL_SERVER(res, addResponse.data);
     }
+  },
+  getAllProducts: async (req, res) => {
+    try {
+      const addResponse = await ProductService.getAllProducts();
+      
+      if (addResponse.success) {
+        res.status(200).json(addResponse.data);
+      } else {
+        res.status(500).json({ error: addResponse.error });
+      }
+    } catch (error) {
+      console.error("Error in getAllProducts controller:", error);
+      res.status(500).json({ error: "An unexpected error occurred" });
+    }
   }
 }
 

@@ -10,6 +10,15 @@ const ProductService = {
       return { message: "failed", data: error.message };
     }
   },
+  getAllProducts: async () => {
+    try {
+      const products = await Product.find();
+      return { success: true, data: products };
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      return { success: false, error: "Failed to fetch products" };
+    }
+  }
 };
 
 export default ProductService;
