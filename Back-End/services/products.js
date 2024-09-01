@@ -2,9 +2,13 @@ import Product from "../models/Products.js"
 
 const ProductService = {
   addProduct: async (productData) => {
-    const product = new Product(productData);
-    await product.save();
-    return product;
+    try {
+      const product = new Product(productData);
+      await product.save();
+      return { message: "success", data: product };
+    } catch (error) {
+      return { message: "failed", data: error.message };
+    }
   },
 };
 

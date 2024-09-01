@@ -8,7 +8,7 @@ const productValidationSchema = Joi.object({
   category: Joi.string().required(),
   subCategory: Joi.string().required(),
   sizes: Joi.array().items(Joi.string()).required(),
-  date: Joi.date().iso(), // Use date() with format if needed
+  date: Joi.date().iso(),
   bestseller: Joi.boolean(),
 });
 

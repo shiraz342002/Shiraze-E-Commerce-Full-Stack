@@ -3,8 +3,6 @@ import httpResponse from "../../utils/httpResponse.js";
 
 const ProductController = {
   addProduct: async (req, res) => {
-    console.log(req.body);
-    
     const addResponse = await ProductService.addProduct(req.body);
     if (addResponse.message === "success") {
       return httpResponse.CREATED(res, addResponse.data);

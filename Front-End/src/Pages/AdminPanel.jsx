@@ -1,40 +1,129 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { assets } from "../assets/front-end-assets/assets";
 import { assets2 } from "../assets/admin_assets/assets";
-import { StoreContext } from "../Store/StoreContext";
+import { toast } from 'react-toastify';
+import { products } from "../assets/front-end-assets/assets";
+
 const AdminPanel = () => {
   const [activeSection, setActiveSection] = useState('');
-  const { products } = useContext(StoreContext)
-  const handleImageClick = (event) => {
-    const targetId = event.currentTarget.getAttribute('htmlFor');
-    document.getElementById(targetId).click();
-  };
+
+  const [formData, setFormData] = useState({
+    productName: '',
+    productDescription: '',
+    productCategory: 'Men',
+    subCategory: 'Topwear',
+    productPrice: '',
+    productSizes: [],
+    bestseller: false,
+    images: []
+  });
+
   const handleNavClick = (section) => {
     setActiveSection(section);
   };
-  // useEffect(() => {
-  //   console.log(products);
-  // }, [])
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+
+  const handleSizeClick = (size) => {
+    setFormData(prevData => ({
+      ...prevData,
+      productSizes: prevData.productSizes.includes(size)
+        ? prevData.productSizes.filter(s => s !== size)
+        : [...prevData.productSizes, size]
+    }));
+  };
+
+  const handleImageChange = (e, index) => {
+    const files = e.target.files;
+    if (files.length > 0) {
+      const newImages = [...formData.images];
+      newImages[index] = URL.createObjectURL(files[0]);
+      setFormData(prevData => ({
+        ...prevData,
+        images: newImages
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.productName || !formData.productDescription || !formData.productPrice) {
+      toast.error("Please fill out all required fields");
+      return;
+    }
+
+    const newProduct = {
+      name: formData.productName,
+      description: formData.productDescription,
+      price: parseFloat(formData.productPrice),
+      image: formData.images,
+      category: formData.productCategory,
+      subCategory: formData.subCategory,
+      sizes: formData.productSizes,
+      date: new Date(),
+      bestseller: formData.bestseller
+    };
+
+    try {
+      const response = await fetch('http://localhost:3000/products/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newProduct),
+      });
+      console.log(response);
+      
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Product added:", result);
+        toast.success("Product added successfully!");
+        setFormData({
+          productName: '',
+          productDescription: '',
+          productCategory: 'Men',
+          subCategory: 'Topwear',
+          productPrice: '',
+          productSizes: [],
+          bestseller: false,
+          images: []
+        });
+      } else {
+        const error = await response.json();
+        toast.error("Failed to add product: " + error.message);
+      }
+    } catch (error) {
+      toast.error("An error occurred while adding the product.");
+      console.error("Error adding product:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-    <header className="flex items-center justify-between p-4 bg-gray-800 shadow-lg">
-  <div className="flex items-center space-x-4">
-    <img
-      className="w-24 cursor-pointer transition-transform transform hover:scale-105"
-      src={assets.shiraz_logo}
-      alt="Logo"
-    />
-    <h1 className="text-white text-2xl font-semibold tracking-wide transition-all duration-300 transform hover:scale-110 hover:text-gray-300">
-      Admin Panel
-    </h1>
-  </div>
-  <button className="bg-red-600 text-white py-1 px-4 rounded-md shadow-sm hover:bg-red-700 transition-colors duration-200">
-    Logout
-  </button>
-</header>
+      <header className="flex items-center justify-between p-4 bg-gray-800 shadow-lg">
+        <div className="flex items-center space-x-4">
+          <img
+            className="w-24 cursor-pointer transition-transform transform hover:scale-105"
+            src={assets.shiraz_logo}
+            alt="Logo"
+          />
+          <h1 className="text-white text-2xl font-semibold tracking-wide transition-all duration-300 transform hover:scale-110 hover:text-gray-300">
+            Admin Panel
+          </h1>
+        </div>
+        <button className="bg-red-600 text-white py-1 px-4 rounded-md shadow-sm hover:bg-red-700 transition-colors duration-200">
+          Logout
+        </button>
+      </header>
       <hr className="border-gray-300" />
-      <div className="flex flex-1 bg-white" >
+      <div className="flex flex-1 bg-white">
         <aside className="w-[18%] bg-white border-r border-gray-200 shadow-sm">
           <nav className="flex flex-col p-4 space-y-2 gap-4 pt-6 pl-[20%] text-[15px]">
             <a
@@ -76,72 +165,61 @@ const AdminPanel = () => {
           </nav>
         </aside>
         <main className="w-[70%] mx-auto ml-[max(5vw,25px)] my-8 text-gray-600 text-base bg-white">
-          <div className="">
-          </div>
           {activeSection === 'add' && (
-            <form className="flex flex-col w-full items-start">
+            <form className="flex flex-col w-full items-start" onSubmit={handleSubmit}>
               <div className="mb-4">
-                <p className="text-base ">Upload Image</p>
+                <p className="text-base">Upload Image</p>
               </div>
               <div className="flex gap-2 flex-wrap">
-                <div className="flex gap-2">
-                  <label htmlFor="image1">
-                    <img
-                      className="w-20 cursor-pointer"
-                      src={assets2.upload_area}
-                      alt="Upload"
-                      onClick={handleImageClick}
+                {[0, 1, 2, 3].map((index) => (
+                  <div key={index} className="flex gap-2">
+                    <label htmlFor={`image${index + 1}`}>
+                      <img
+                        className="w-20 cursor-pointer"
+                        src={formData.images[index] || assets2.upload_area}
+                        alt="Upload"
+                        onClick={() => document.getElementById(`image${index + 1}`).click()}
+                      />
+                    </label>
+                    <input
+                      type="file"
+                      hidden
+                      id={`image${index + 1}`}
+                      onChange={(e) => handleImageChange(e, index)}
                     />
-                  </label>
-                  <input type="file" hidden id="image1" />
-                </div>
-                <div className="flex gap-2">
-                  <label htmlFor="image2">
-                    <img
-                      className="w-20 cursor-pointer"
-                      src={assets2.upload_area}
-                      alt="Upload"
-                      onClick={handleImageClick}
-                    />
-                  </label>
-                  <input type="file" hidden id="image2" />
-                </div>
-                <div className="flex gap-2">
-                  <label htmlFor="image3">
-                    <img
-                      className="w-20 cursor-pointer"
-                      src={assets2.upload_area}
-                      alt="Upload"
-                      onClick={handleImageClick}
-                    />
-                  </label>
-                  <input type="file" hidden id="image3" />
-                </div>
-                <div className="flex gap-2">
-                  <label htmlFor="image4">
-                    <img
-                      className="w-20 cursor-pointer"
-                      src={assets2.upload_area}
-                      alt="Upload"
-                      onClick={handleImageClick}
-                    />
-                  </label>
-                  <input type="file" hidden id="image4" />
-                </div>
+                  </div>
+                ))}
               </div>
               <div className="w-full">
-                <p className="mt-4">Prodct Name</p>
-                <input class="w-full max-w-[500px] mt-4 px-3 py-2 border border-gray-300" type="text" placeholder="Type here" />
-
+                <p className="mt-4">Product Name</p>
+                <input
+                  className="w-full max-w-[500px] mt-4 px-3 py-2 border border-gray-300"
+                  type="text"
+                  name="productName"
+                  placeholder="Type here"
+                  value={formData.productName}
+                  onChange={handleChange}
+                />
               </div>
               <div className="w-full">
-                <p className="mt-4">Prodct Description</p>
-                <textarea class="w-full max-w-[500px] mt-4 px-3 py-2 border border-gray-300" type="textarea" placeholder="Write content here" />
+                <p className="mt-4">Product Description</p>
+                <textarea
+                  className="w-full max-w-[500px] mt-4 px-3 py-2 border border-gray-300"
+                  name="productDescription"
+                  placeholder="Write content here"
+                  value={formData.productDescription}
+                  onChange={handleChange}
+                />
               </div>
-              <div className="mt-4 flex flex-col sm:flex-row gap-8 w-full sm:gap-8 ">
+              <div className="mt-4 flex flex-col sm:flex-row gap-8 w-full sm:gap-8">
                 <div>
                   <p className="mb-4">Product Category</p>
-                  <select className="px-2 w-full py-2 border-gray-300 border" >
+                  <select
+                    className="px-2 w-full py-2 border-gray-300 border"
+                    name="productCategory"
+                    value={formData.productCategory}
+                    onChange={handleChange}
+                  >
                     <option value="Men">Men</option>
                     <option value="Women">Women</option>
                     <option value="Kids">Kids</option>
@@ -149,42 +227,61 @@ const AdminPanel = () => {
                 </div>
                 <div>
                   <p className="mb-4">Sub Category</p>
-                  <select className="px-3 w-full py-2 border-gray-300 border" >
+                  <select
+                    className="px-3 w-full py-2 border-gray-300 border"
+                    name="subCategory"
+                    value={formData.subCategory}
+                    onChange={handleChange}
+                  >
                     <option value="Topwear">Topwear</option>
                     <option value="Bottomwear">Bottomwear</option>
                     <option value="Winterwear">Winterwear</option>
+                    <option value="Innerwear">Innerwear</option>
+                    <option value="Sleepwear">Sleepwear</option>
+                    <option value="Sportswear">Sportswear</option>
                   </select>
                 </div>
-                <div>
-                  <p className="mb-4">Product Price</p>
-                  <input className="py-2 px-4 w-full sm:w-[120px] border-gray-300 border" type="number" placeholder="30" />
-                </div>
               </div>
-              <div>
-                <p className=" mt-5">Product Sizes</p>
-                <div className="flex gap-3 mt-3">
-                  <div>
-                    <p className="border bg-slate-200 py-1 px-3 cursor-pointer">S</p>
-                  </div>
-                  <div>
-                    <p className="border bg-slate-200 py-1 px-3 cursor-pointer">M</p>
-                  </div>
-                  <div>
-                    <p className="border bg-slate-200 py-1 px-3 cursor-pointer">L</p>
-                  </div>
-                  <div>
-                    <p className="border bg-slate-200 py-1 px-3 cursor-pointer">XL</p>
-                  </div>
-                  <div>
-                    <p className="border bg-slate-200 py-1 px-3 cursor-pointer">XLL</p>
-                  </div>
-                </div>
-                <div className="mt-5">
-                  <input type="checkbox" id="bestseller" />
-                  <label className="px-4" htmlFor="bestseller">Add to Best Seller</label>
-                </div>
-                <button className=" w-28 mt-5 text-white bg-black py-3 px-10">ADD</button>
+              <div className="w-full">
+                <p className="mt-4">Product Price</p>
+                <input
+                  className="w-full max-w-[500px] px-3 py-2 border-gray-300 border"
+                  type="number"
+                  name="productPrice"
+                  placeholder="Type here"
+                  value={formData.productPrice}
+                  onChange={handleChange}
+                />
               </div>
+              <div className="flex gap-2 mt-8 mb-8">
+                {['S', 'M', 'L', 'XL'].map((size) => (
+                  <button
+                    type="button"
+                    key={size}
+                    onClick={() => handleSizeClick(size)}
+                    className={`border border-gray-300 px-4 py-2 ${formData.productSizes.includes(size) ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'}`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+              <div className="mb-8">
+                <label className="flex items-center space-x-3">
+                  <input
+                    type="checkbox"
+                    name="bestseller"
+                    checked={formData.bestseller}
+                    onChange={handleChange}
+                  />
+                  <span className="text-gray-600">Best Seller</span>
+                </label>
+              </div>
+              <button
+                className="px-4 py-2 bg-gray-800 text-white rounded-md"
+                type="submit"
+              >
+                Add Product
+              </button>
             </form>
           )}
           {activeSection === 'list' && (

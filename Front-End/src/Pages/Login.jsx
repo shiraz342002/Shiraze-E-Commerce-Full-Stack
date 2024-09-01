@@ -44,7 +44,7 @@ const Login = () => {
                     toast.success("Logged in successfully!");
                     setTimeout(() => {
                         navigate('/');
-                    }, 1000); // Delay navigation by 1 second
+                    }, 1000);
                 } else {
                     toast.error('Token not received');
                 }
