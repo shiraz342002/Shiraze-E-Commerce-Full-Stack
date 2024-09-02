@@ -6,8 +6,7 @@ import { products } from "../assets/front-end-assets/assets";
 
 const AdminPanel = () => {
   const [activeSection, setActiveSection] = useState('');
-  const [image,setImage]=useState(false)
-
+  const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
     productName: '',
     productDescription: '',
@@ -16,7 +15,7 @@ const AdminPanel = () => {
     productPrice: '',
     productSizes: [],
     bestseller: false,
-    images: []
+    image: []
   });
 
   const fileInputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
@@ -42,12 +41,8 @@ const AdminPanel = () => {
     }));
   };
 
-  const handleImageClick = (index) => {
-    fileInputRefs[index].current.click();
-  };
-
-  const handleImageChange = (e, index) => {
-    setImage(e.target.files[0])
+  const imageHandler = (e) => {
+    setImage(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
@@ -58,14 +53,36 @@ const AdminPanel = () => {
       return;
     }
 
+    // Image upload
+    let responseData;
+    const imageFormData = new FormData();
+    imageFormData.append('image', image);
 
-    
+    try {
+      const uploadResponse = await fetch('http://localhost:3000/upload', {
+        method: "POST",
+        body: imageFormData,
+      });
+      responseData = await uploadResponse.json();
 
+      if (responseData.success) {
+        formData.image = responseData.image_url;
+      } else {
+        toast.error("Image upload failed");
+        return;
+      }
+    } catch (error) {
+      toast.error("An error occurred while uploading the image.");
+      console.error("Error uploading image:", error);
+      return;
+    }
+
+    // Product submission
     const newProduct = {
       name: formData.productName,
       description: formData.productDescription,
       price: parseFloat(formData.productPrice),
-      image: formData.images,
+      image: formData.image,
       category: formData.productCategory,
       subCategory: formData.subCategory,
       sizes: formData.productSizes,
@@ -83,7 +100,6 @@ const AdminPanel = () => {
       });
 
       if (response.ok) {
-        const result = await response.json();
         toast.success("Product added successfully!");
         setFormData({
           productName: '',
@@ -93,8 +109,9 @@ const AdminPanel = () => {
           productPrice: '',
           productSizes: [],
           bestseller: false,
-          images: []
+          image: []
         });
+        setImage(null);
       } else {
         const error = await response.json();
         toast.error("Failed to add product: " + error.message);
@@ -171,24 +188,10 @@ const AdminPanel = () => {
                 <p className="text-base">Upload Image</p>
               </div>
               <div className="flex gap-2 flex-wrap">
-                {[0, 1, 2, 3].map((index) => (
-                  <div key={index} className="flex gap-2">
-                    <label htmlFor={`image${index + 1}`}>
-                      <img
-                        className="w-20 cursor-pointer"
-                        src={formData.images[index] || assets2.upload_area}
-                        alt="Upload"
-                        onClick={() => handleImageClick(index)}
-                      />
-                    </label>
-                    <input
-                      type="file"
-                      hidden
-                      ref={fileInputRefs[index]}
-                      onChange={(e) => handleImageChange(e, index)}
-                    />
-                  </div>
-                ))}
+                <label htmlFor="upload_image">
+                  <img className="w-20" src={image ? URL.createObjectURL(image) : assets2.upload_area} alt="" />
+                </label>
+                <input type="file" name="image" id="upload_image" hidden onChange={imageHandler} />
               </div>
               <div className="w-full">
                 <p className="mt-4">Product Name</p>
@@ -228,56 +231,56 @@ const AdminPanel = () => {
                 <div>
                   <p className="mb-4">Sub Category</p>
                   <select
-                    className="px-3 w-full py-2 border-gray-300 border"
+                    className="px-2 w-full py-2 border-gray-300 border"
                     name="subCategory"
                     value={formData.subCategory}
                     onChange={handleChange}
                   >
                     <option value="Topwear">Topwear</option>
                     <option value="Bottomwear">Bottomwear</option>
-                    <option value="Winterwear">Winterwear</option>
+                    <option value="Accessories">Accessories</option>
                   </select>
                 </div>
               </div>
-              <div className="w-full">
-                <p className="mt-4">Product Price</p>
+              <div className="mt-8 w-full">
+                <p className="mb-4">Product Price</p>
                 <input
-                  className="w-full max-w-[500px] px-3 py-2 border-gray-300 border"
+                  className="w-full max-w-[500px] mt-4 px-3 py-2 border border-gray-300"
                   type="number"
                   name="productPrice"
-                  placeholder="Type here"
+                  placeholder="Enter price"
                   value={formData.productPrice}
                   onChange={handleChange}
                 />
               </div>
-              <div className="flex gap-2 mt-8 mb-8">
-                {['S', 'M', 'L', 'XL'].map((size) => (
-                  <button
-                    type="button"
-                    key={size}
-                    onClick={() => handleSizeClick(size)}
-                    className={`border border-gray-300 px-4 py-2 ${formData.productSizes.includes(size) ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'}`}
-                  >
-                    {size}
-                  </button>
-                ))}
+              <div className="mt-8 flex flex-col w-full">
+                <p>Select Size</p>
+                <div className="flex gap-4 mt-4">
+                  {['S', 'M', 'L', 'XL', 'XXL'].map(size => (
+                    <button
+                      key={size}
+                      type="button"
+                      className={`px-4 py-2 border border-gray-300 ${formData.productSizes.includes(size) ? 'bg-gray-200' : ''}`}
+                      onClick={() => handleSizeClick(size)}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className="mb-8">
-                <label className="flex items-center space-x-3">
+              <div className="mt-8 flex gap-2">
+                <label>
                   <input
                     type="checkbox"
                     name="bestseller"
                     checked={formData.bestseller}
                     onChange={handleChange}
                   />
-                  <span className="text-gray-600">Best Seller</span>
+                  Bestseller
                 </label>
               </div>
-              <button
-                className="px-4 py-2 bg-gray-800 text-white rounded-md"
-                type="submit"
-              >
-                Add Product
+              <button className="mt-8 bg-blue-500 text-white px-4 py-2 rounded" type="submit">
+                Submit
               </button>
             </form>
           )}

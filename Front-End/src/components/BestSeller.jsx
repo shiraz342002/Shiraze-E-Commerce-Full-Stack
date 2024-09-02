@@ -9,7 +9,7 @@ const BestSeller = () => {
         if (products.length>0) {
             const filteredBestSellers = products.filter(product => product.bestseller === true);
             setBestSeller(filteredBestSellers.slice(0, 5));
-            // console.log(filteredBestSellers);
+          
         }
     }, []);
   return (

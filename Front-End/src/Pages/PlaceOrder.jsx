@@ -40,21 +40,12 @@ const PlaceOrder = () => {
     return true;
   };
 
-  const handlePlaceOrder = async () => {
+  const handlePlaceOrder = () => {
     if (validateForm()) {
-      try {
-        const response = await axios.post('/api/place-order', {
-          ...formData,
-          paymentMethod,
-        });
-        toast.success(response.data.message);
-        setTimeout(() => {
-          navigate('/orders');
-        }, 1500); 
-      } catch (error) {
-        toast.error('Something went wrong. Please try again.');
-        console.error('Error placing order:', error);
-      }
+      toast.success('Order placed successfully!');
+      setTimeout(() => {
+        navigate('/orders');
+      }, 1000); 
     }
   };
 
