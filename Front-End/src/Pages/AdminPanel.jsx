@@ -6,6 +6,7 @@ import { products } from "../assets/front-end-assets/assets";
 
 const AdminPanel = () => {
   const [activeSection, setActiveSection] = useState('');
+  const [image,setImage]=useState(false)
 
   const [formData, setFormData] = useState({
     productName: '',
@@ -46,15 +47,7 @@ const AdminPanel = () => {
   };
 
   const handleImageChange = (e, index) => {
-    const files = e.target.files;
-    if (files.length > 0) {
-      const newImages = [...formData.images];
-      newImages[index] = URL.createObjectURL(files[0]);
-      setFormData(prevData => ({
-        ...prevData,
-        images: newImages
-      }));
-    }
+    setImage(e.target.files[0])
   };
 
   const handleSubmit = async (e) => {
