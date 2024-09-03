@@ -18,7 +18,19 @@ const ProductService = {
       console.error("Error fetching products:", error);
       return { success: false, error: "Failed to fetch products" };
     }
-  }
+  },
+  removeById: async (id) => {
+    try {
+      const deletedproduct = await Product.findByIdAndDelete(id);
+      if (!deletedproduct) {
+        return { message: "error", data: "Product not found" };
+      }
+      return { message: "success", data: "Product deleted successfully" };
+    } catch (error) {
+      return { message: "error", data: error.message };
+    }
+  },
+
 };
 
 export default ProductService;

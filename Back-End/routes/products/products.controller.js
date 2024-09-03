@@ -25,6 +25,16 @@ const ProductController = {
       console.error("Error in getAllProducts controller:", error);
       res.status(500).json({ error: "An unexpected error occurred" });
     }
+  },
+  delete: async (req, res) => {
+    const deleteResponse = await ProductService.removeById(req.params.id);
+    if (deleteResponse.message === "success") {
+      return httpResponse.SUCCESS(res, deleteResponse.data);
+    } else if (deleteResponse.message === "error") {
+      return httpResponse.NOT_FOUND(res, deleteResponse.data);
+    } else {
+      return httpResponse.INTERNAL_SERVER(res, deleteResponse.data);
+    }
   }
 }
 

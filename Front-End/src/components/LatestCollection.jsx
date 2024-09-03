@@ -9,7 +9,7 @@ function LatestCollection() {
     useEffect(()=>{
       if(products.length>=10){
        setdisplaylatestcollection(products.slice(0,10))
-       console.log(products);
+      //  console.log(products);
        
       }
     },[])

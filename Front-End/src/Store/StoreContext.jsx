@@ -13,7 +13,7 @@ const StoreContextProvider=(props)=>{
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    useEffect(() => {
+    const fetchProducts = () => {
         fetch('http://localhost:3000/products/getAll')
           .then(response => response.json())
           .then(data => {
@@ -28,9 +28,10 @@ const StoreContextProvider=(props)=>{
             setError(error.message);
             setLoading(false);
           });
+      };
+      useEffect(() => {
+        fetchProducts();
       }, []);
-    
-      console.log(products);
       
     const currency="$"
     const delivery_fee=10
@@ -38,8 +39,6 @@ const StoreContextProvider=(props)=>{
     const [showSearch,setShowSearch]=useState(false)
     const [cartItems,setCartItems]=useState({})
     const navigate = useNavigate()
-
-
 
     const addToCart =async (itemId,size) =>{
         if(!size){
@@ -109,6 +108,8 @@ const StoreContextProvider=(props)=>{
 
 
     const value ={
+        fetchProducts,
+        setProducts,
         isAuthenticated,
         navigate,
         getCartTotalAmount,

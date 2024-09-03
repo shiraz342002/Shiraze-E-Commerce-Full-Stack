@@ -5,4 +5,5 @@ import validate from "../../middlewares/validate.js";
 const router = express.Router();
 router.post('/add',validate(productValidation),  ProductController.addProduct);
 router.get('/getAll',  ProductController.getAllProducts);
+router.delete("/delete/:id", ProductController.delete);
 export default router;

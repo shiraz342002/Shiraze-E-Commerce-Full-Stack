@@ -1,10 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { assets } from "../assets/front-end-assets/assets";
 import { assets2 } from "../assets/admin_assets/assets";
 import { toast } from 'react-toastify';
-import { products } from "../assets/front-end-assets/assets";
+// import { products } from "../assets/front-end-assets/assets";
+import { StoreContext } from "../Store/StoreContext";
 
 const AdminPanel = () => {
+  const {products,setProducts,fetchProducts} =useContext(StoreContext)
   const [activeSection, setActiveSection] = useState('');
   const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
@@ -119,6 +121,27 @@ const AdminPanel = () => {
     } catch (error) {
       toast.error("An error occurred while adding the product.");
       console.error("Error adding product:", error);
+    }
+  };
+  const handleDelete = async (productId) => {
+    console.log("Product to be deleted "+productId);
+    
+    try {
+      const response = await fetch(`http://localhost:3000/products/delete/${productId}`, {
+        method: 'DELETE',
+      });
+      console.log(response);
+      
+      if (response.ok) {
+        toast.success("Product deleted successfully!");
+        fetchProducts();
+      } else {
+        const error = await response.json();
+        toast.error("Failed to delete the product: " + error.message);
+      }
+    } catch (error) {
+      toast.error("An error occurred while deleting the product.");
+      console.error('An error occurred while deleting the product:', error);
     }
   };
 
@@ -304,7 +327,7 @@ const AdminPanel = () => {
                     <p className="truncate">{item.name}</p>
                     <p className="hidden sm:block truncate">{item.category}</p>
                     <p className="hidden sm:block">{item.price}</p>
-                    <img className="w-3 cursor-pointer" src={assets.cross_icon} alt="Delete" />
+                    <img onClick={() => handleDelete(item._id)} className="w-3 cursor-pointer" src={assets.cross_icon} alt="Delete" />
                   </div>
                 ))}
               </div>
