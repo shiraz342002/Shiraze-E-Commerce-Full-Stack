@@ -33,7 +33,6 @@ async function startServer() {
 
   const upload = multer({ storage });
 
-  // Handling image upload
   app.post('/upload', upload.single('image'), (req, res) => {
     console.log("Upload endpoint hit");
     
@@ -48,7 +47,6 @@ async function startServer() {
     }
   });
 
-  // Serving static images
   app.use("/images", express.static(uploadDir));
 
   process.on("uncaughtException", (err) => {

@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar';
 import SearchBar from './components/SearchBar';
 import Footer from './components/Footer';
-import Home from './pages/Home';
 import Collection from './Pages/Collection';
 import Product from './pages/Product';
 import Cart from './pages/Cart';
@@ -18,6 +17,7 @@ import AdminPanel from './Pages/AdminPanel';
 import { Route,Routes } from 'react-router-dom';
 import MyProfile from './Pages/MyProfile';
 import Test from './Pages/Test';
+import Home from './Pages/Home';
 const App = () => {
   const location = useLocation();
   const isAdminPanel = location.pathname === '/adminpanel';
