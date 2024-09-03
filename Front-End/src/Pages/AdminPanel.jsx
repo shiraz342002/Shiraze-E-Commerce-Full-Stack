@@ -53,7 +53,7 @@ const AdminPanel = () => {
       return;
     }
 
-    // Image upload
+
     let responseData;
     const imageFormData = new FormData();
     imageFormData.append('image', image);
@@ -77,7 +77,7 @@ const AdminPanel = () => {
       return;
     }
 
-    // Product submission
+
     const newProduct = {
       name: formData.productName,
       description: formData.productDescription,
@@ -238,7 +238,7 @@ const AdminPanel = () => {
                   >
                     <option value="Topwear">Topwear</option>
                     <option value="Bottomwear">Bottomwear</option>
-                    <option value="Accessories">Accessories</option>
+                    <option value="Winterwear">Winterwear</option>
                   </select>
                 </div>
               </div>

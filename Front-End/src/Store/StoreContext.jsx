@@ -6,35 +6,32 @@ export const StoreContext = createContext()
 
 
 // if importing fornt-End assets
-import { products } from "../assets/front-end-assets/assets";
+// import { products } from "../assets/front-end-assets/assets";
 const StoreContextProvider=(props)=>{
+
     //Fetching products from my backend
-    // const [products, setProducts] = useState([]);
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
-    // useEffect(() => {
-    //     fetch('http://localhost:3000/products/getAll')
-    //       .then(response => response.json())
-    //       .then(data => {
-    //         // Check if data is an array
-    //         if (Array.isArray(data)) {
-    //           setProducts(data);
-    //         } else {
-    //           setError('Unexpected data format');
-    //         }
-    //         setLoading(false);
-    //       })
-    //       .catch(error => {
-    //         setError(error.message);
-    //         setLoading(false);
-    //       });
-    //   }, []);
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    useEffect(() => {
+        fetch('http://localhost:3000/products/getAll')
+          .then(response => response.json())
+          .then(data => {
+            if (Array.isArray(data)) {
+              setProducts(data);
+            } else {
+              setError('Unexpected data format');
+            }
+            setLoading(false);
+          })
+          .catch(error => {
+            setError(error.message);
+            setLoading(false);
+          });
+      }, []);
     
-    //   console.log(products);
+      console.log(products);
       
-
-
-
     const currency="$"
     const delivery_fee=10
     const [search,setSearch]=useState('')
