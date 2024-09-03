@@ -100,9 +100,11 @@ const AdminPanel = () => {
         },
         body: JSON.stringify(newProduct),
       });
-
+      console.log(response);
+      
       if (response.ok) {
         toast.success("Product added successfully!");
+        fetchProducts();
         setFormData({
           productName: '',
           productDescription: '',
