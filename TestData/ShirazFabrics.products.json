@@ -1,0 +1,323 @@
+[{
+  "_id": {
+    "$oid": "66d69caa231493fa88817722"
+  },
+  "name": "Black Shirt for men",
+  "description": "Perfect for summer wear",
+  "price": 12,
+  "image": [
+    "http://localhost:3000/images/image-1725340842030.png"
+  ],
+  "category": "Men",
+  "subCategory": "Topwear",
+  "sizes": [
+    "L",
+    "M",
+    "S"
+  ],
+  "date": {
+    "$date": "2024-09-03T05:20:42.036Z"
+  },
+  "bestseller": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d69cbd231493fa88817724"
+  },
+  "name": "Green Shirt for kids",
+  "description": "Perfect for summer wear",
+  "price": 12,
+  "image": [
+    "http://localhost:3000/images/image-1725340861689.png"
+  ],
+  "category": "Kids",
+  "subCategory": "Topwear",
+  "sizes": [
+    "M",
+    "L"
+  ],
+  "date": {
+    "$date": "2024-09-03T05:21:01.697Z"
+  },
+  "bestseller": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d69ccf231493fa88817726"
+  },
+  "name": "Shorts for men",
+  "description": "Perfect for summer wear",
+  "price": 23,
+  "image": [
+    "http://localhost:3000/images/image-1725340879433.png"
+  ],
+  "category": "Men",
+  "subCategory": "Bottomwear",
+  "sizes": [
+    "L",
+    "XL",
+    "M"
+  ],
+  "date": {
+    "$date": "2024-09-03T05:21:19.439Z"
+  },
+  "bestseller": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d69ce1231493fa88817728"
+  },
+  "name": "Jacket for kids",
+  "description": "Perfect for summer wear",
+  "price": 66,
+  "image": [
+    "http://localhost:3000/images/image-1725340897033.png"
+  ],
+  "category": "Men",
+  "subCategory": "Accessories",
+  "sizes": [
+    "L",
+    "XL",
+    "XXL"
+  ],
+  "date": {
+    "$date": "2024-09-03T05:21:37.039Z"
+  },
+  "bestseller": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d69cf7231493fa8881772a"
+  },
+  "name": "Blue hoodie for kids",
+  "description": "Perfect for winter wear",
+  "price": 56,
+  "image": [
+    "http://localhost:3000/images/image-1725340919201.png"
+  ],
+  "category": "Men",
+  "subCategory": "Accessories",
+  "sizes": [
+    "L",
+    "XL",
+    "XXL"
+  ],
+  "date": {
+    "$date": "2024-09-03T05:21:59.206Z"
+  },
+  "bestseller": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d69d12231493fa8881772c"
+  },
+  "name": "Black Sweat shirt for kids",
+  "description": "Perfect for winter wear",
+  "price": 45,
+  "image": [
+    "http://localhost:3000/images/image-1725340945993.png"
+  ],
+  "category": "Kids",
+  "subCategory": "Accessories",
+  "sizes": [
+    "L",
+    "XXL",
+    "XL"
+  ],
+  "date": {
+    "$date": "2024-09-03T05:22:26.002Z"
+  },
+  "bestseller": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d69e47231493fa8881773c"
+  },
+  "name": "White jacket for men",
+  "description": "Perfect for winters",
+  "price": 64,
+  "image": [
+    "http://localhost:3000/images/image-1725341255186.png"
+  ],
+  "category": "Men",
+  "subCategory": "Accessories",
+  "sizes": [
+    "L",
+    "XL",
+    "XXL"
+  ],
+  "date": {
+    "$date": "2024-09-03T05:27:35.191Z"
+  },
+  "bestseller": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d69e92231493fa8881773f"
+  },
+  "name": "Denim Jacket Men",
+  "description": "sadasdas",
+  "price": 77,
+  "image": [
+    "http://localhost:3000/images/image-1725341330233.png"
+  ],
+  "category": "Men",
+  "subCategory": "Winterwear",
+  "sizes": [
+    "M",
+    "L",
+    "XL"
+  ],
+  "date": {
+    "$date": "2024-09-03T05:28:50.238Z"
+  },
+  "bestseller": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d6a7367244d83eedeb30a8"
+  },
+  "name": "Pink Shirt For Women",
+  "description": "Perfect for Summer Wear",
+  "price": 33,
+  "image": [
+    "http://localhost:3000/images/image-1725343542058.png"
+  ],
+  "category": "Women",
+  "subCategory": "Topwear",
+  "sizes": [
+    "XL",
+    "XXL"
+  ],
+  "date": {
+    "$date": "2024-09-03T06:05:42.069Z"
+  },
+  "bestseller": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d6a7517244d83eedeb30aa"
+  },
+  "name": "Leather Jacket for Women",
+  "description": "Perfect for Winter Wear",
+  "price": 77,
+  "image": [
+    "http://localhost:3000/images/image-1725343569156.png"
+  ],
+  "category": "Women",
+  "subCategory": "Winterwear",
+  "sizes": [
+    "M",
+    "L",
+    "XL",
+    "XXL"
+  ],
+  "date": {
+    "$date": "2024-09-03T06:06:09.162Z"
+  },
+  "bestseller": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d6a7637244d83eedeb30ac"
+  },
+  "name": "Brown Shirt for Women",
+  "description": "Perfect for Summer Wear",
+  "price": 66,
+  "image": [
+    "http://localhost:3000/images/image-1725343587019.png"
+  ],
+  "category": "Women",
+  "subCategory": "Topwear",
+  "sizes": [
+    "L",
+    "XL",
+    "XXL"
+  ],
+  "date": {
+    "$date": "2024-09-03T06:06:27.027Z"
+  },
+  "bestseller": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d6a7c37244d83eedeb30ae"
+  },
+  "name": "White Hoodie",
+  "description": "sdasd",
+  "price": 55,
+  "image": [
+    "http://localhost:3000/images/image-1725343683941.png"
+  ],
+  "category": "Men",
+  "subCategory": "Topwear",
+  "sizes": [
+    "L",
+    "XL"
+  ],
+  "date": {
+    "$date": "2024-09-03T06:08:03.946Z"
+  },
+  "bestseller": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d6aa0f3b09e5ed6c656928"
+  },
+  "name": "Color Full hoodie For Kids",
+  "description": "Perfect for winter wear",
+  "price": 34,
+  "image": [
+    "http://localhost:3000/images/image-1725344271027.png"
+  ],
+  "category": "Kids",
+  "subCategory": "Winterwear",
+  "sizes": [
+    "S",
+    "M",
+    "L",
+    "XL",
+    "XXL"
+  ],
+  "date": {
+    "$date": "2024-09-03T06:17:51.034Z"
+  },
+  "bestseller": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d6abb5ee895f35f121e04c"
+  },
+  "name": "Color Full Top Women",
+  "description": "Perfect for summer wear",
+  "price": 30.99,
+  "image": [
+    "http://localhost:3000/images/image-1725344693914.png"
+  ],
+  "category": "Women",
+  "subCategory": "Topwear",
+  "sizes": [
+    "XL",
+    "XXL",
+    "M",
+    "L"
+  ],
+  "date": {
+    "$date": "2024-09-03T06:24:53.919Z"
+  },
+  "bestseller": true,
+  "__v": 0
+}]
