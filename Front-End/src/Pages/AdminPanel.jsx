@@ -103,6 +103,8 @@ const AdminPanel = () => {
       console.log(response);
       
       if (response.ok) {
+        console.log("Im executing");
+        
         toast.success("Product added successfully!");
         fetchProducts();
         setFormData({
